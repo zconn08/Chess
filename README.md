@@ -1,4 +1,6 @@
 # Chess
+Command line version of Chess with three modes
+![modeselect]
 
 Ruby is required to run this game
 Once Ruby is installed, bundle install, download the files, go into terminal, and either run the game interface
@@ -8,12 +10,6 @@ $ ruby game.rb \*recommended
 or run them through irb
 
 $ irb $ load 'game.rb'
-
-Select your game mode.
-
-![modeselect]
-
-Start screen.
 
 ![start]
 
