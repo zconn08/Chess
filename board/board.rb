@@ -78,6 +78,22 @@ class Board
     puts killed_pieces.join(" ")
   end
 
+  def render_with_instructions
+    system('clear')
+    self.render
+    puts "Please make a move #{@current_player.name}. Your color is #{@current_player.color}"
+    puts "#{@current_player.color.capitalize} is in check".colorize(color: :red) if self.in_check?(@current_player.color)
+    puts "______________________________________________________"
+    puts "Instructions:"
+    puts "Please use WASD to navigate and Enter to select."
+    print "Cancel a move by selecting the same piece twice, "
+    if @current_player.class == Player
+      puts "push Q to quit"
+    else
+      puts "push CTRL + C to quit"
+    end
+  end
+
   def move(movement)
     start_pos, end_pos = movement
     if self[start_pos].moves.include?(end_pos)

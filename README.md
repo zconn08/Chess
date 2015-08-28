@@ -9,6 +9,10 @@ or run them through irb
 
 $ irb $ load 'game.rb'
 
+Select your game mode.
+
+![modeselect]
+
 ![start]
 
 The game will show all possible moves available for a currently selected piece
@@ -27,9 +31,15 @@ Gameover results when a player is in checkmate
 
 ![gameover]
 
+Watch two AI players battle it out!
+
+![aivsai]
+
 
 [start]: ./pictures/start.png
 [possible]: ./pictures/possible.png
 [prevents]: ./pictures/prevents.png
 [check]: ./pictures/check.png
 [gameover]: ./pictures/gameover.png
+[aivsai]: ./pictures/aivsai.gif
+[modeselect]: ./pictures/mode_select.png

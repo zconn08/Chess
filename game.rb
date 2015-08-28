@@ -1,27 +1,57 @@
 require './board/board.rb'
 require './players/player.rb'
+require './players/ai.rb'
 
 class Game
   attr_reader :players, :player_one, :player_two, :board, :current_player
 
-  def initialize(player1, player2)
-    @player_one, @player_two = Player.new(player1), Player.new(player2)
-    player_one.color, player_two.color = "white", "black"
+  def initialize()
     @board = Board.new
+    setup
+    player_one.color, player_two.color = "white", "black"
     @players = [player_one, player_two]
     @current_player = players.first
   end
 
-  def play
-    until game_over?
-      board.current_player = current_player
-      take_turn
-      rotate_players
-    end
+  def setup
     system('clear')
-    board.render
-    puts "#{players.first.color.capitalize} is in checkmate!"
-    puts "Game over! #{players.last.name} won!"
+    puts "Please select mode"
+    puts "1. Human Vs. Human"
+    puts "2. Human Vs. AI"
+    puts "3. AI Vs. AI"
+    input = gets.chomp.to_i
+    if input == 1
+      puts "Please enter Player 1's name"
+      player1_name = gets.chomp
+      puts "Please enter Player 2's name"
+      player2_name = gets.chomp
+      @player_one, @player_two = Player.new(player1_name, board), Player.new(player2_name, board)
+    elsif input == 2
+      puts "Please enter your name"
+      player1_name = gets.chomp
+      @player_one, @player_two = Player.new(player1_name, board), AI.new("Robot", board)
+    elsif input == 3
+      @player_one, @player_two = AI.new("Robot 1", board), AI.new("Robot 2", board)
+    else
+      puts "Please select 1, 2, or 3"
+      sleep (1)
+      setup
+    end
+  end
+
+  def play
+    begin
+      until game_over?
+        board.current_player = current_player
+        take_turn
+        rotate_players
+      end
+      system('clear')
+      board.render
+      puts "#{players.first.color.capitalize} is in checkmate!"
+      puts "Game over! #{players.last.name} won!"
+    rescue Interrupt => e
+    end
   end
 
   def rotate_players
@@ -30,10 +60,10 @@ class Game
   end
 
   def take_turn
-    render_with_instructions
+    board.render_with_instructions
 
     begin
-      move_positions = get_valid_input
+      move_positions = current_player.get_valid_input
       board.move!(move_positions)
 
     rescue MoveError => e
@@ -42,51 +72,10 @@ class Game
     end
   end
 
-  def get_valid_input
-    board.current_selection = []
-    move_positions = []
-    while move_positions.count < 2 do
-      #@board.debugging_output
-      movement = @current_player.get_cursor_movement
-      if movement == "\r" && valid_helper(move_positions)
-        move_positions << board.cursor
-        board.current_selection = board.cursor
-      end
-
-      board.move_cursor(movement)
-      render_with_instructions
-    end
-
-    if move_positions.uniq.count == 1 || !board[move_positions[0]].moves.include?(move_positions[1])
-      move_positions = get_valid_input
-    end
-    board.current_selection = []
-    move_positions
-  end
-
-  def valid_helper(arr)
-    (board.occupied? && selected_right_color) || (arr.length == 1)
-  end
-
-  def selected_right_color
-    board.all_color_positions(@current_player.color).include?(board.cursor)
-  end
-
-  def render_with_instructions
-    system('clear')
-    board.render
-    puts "Please make a move #{@current_player.name}. Your color is #{@current_player.color}"
-    puts "#{@current_player.color.capitalize} is in check".colorize(color: :red) if board.in_check?(@current_player.color)
-    puts "______________________________________________________"
-    puts "Instructions:"
-    puts "Please use WASD to navigate and Enter to select."
-    puts "Cancel a move by selecting the same piece twice, push Q to quit"
-  end
-
   def game_over?
     board.game_over?
   end
 end
 
-game = Game.new("Player 1","Player 2")
+game = Game.new
 game.play
