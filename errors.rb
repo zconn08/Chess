@@ -1,0 +1,1 @@
+class MoveError < StandardError; end
