@@ -1,6 +1,6 @@
 require_relative 'display.rb'
-require_relative 'pieces.rb'
 require_relative 'errors.rb'
+require './pieces/pieces.rb'
 require 'colorize'
 require 'byebug'
 

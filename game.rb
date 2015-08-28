@@ -1,5 +1,5 @@
-require_relative 'board.rb'
-require_relative 'player.rb'
+require './board/board.rb'
+require './players/player.rb'
 
 class Game
   attr_reader :players, :player_one, :player_two, :board, :current_player
