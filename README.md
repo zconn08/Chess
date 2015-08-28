@@ -1,5 +1,6 @@
 # Chess
 Command line version of Chess with three modes
+
 ![modeselect]
 
 Ruby is required to run this game
