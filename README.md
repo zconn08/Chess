@@ -17,7 +17,7 @@ The game will show all possible moves available for a currently selected piece
 
 It will determine if a move will result in you losing a game and prevent that move
 
-![prevent]
+![prevents]
 
 In check position will display
 
