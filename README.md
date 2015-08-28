@@ -13,6 +13,8 @@ Select your game mode.
 
 ![modeselect]
 
+Start screen.
+
 ![start]
 
 The game will show all possible moves available for a currently selected piece
